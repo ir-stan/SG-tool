@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>個人綜合工作看板</title>
+  <style>
+    :root {
+      --sidebar:#111827;--sidebar2:#0f172a;--surface:#fff;--surface2:#f8fafc;
+      --text:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#0f766e;
+      --accent2:#14b8a6;--danger:#dc2626;--shadow:0 18px 50px rgba(15,23,42,.12);
+      --sidebar-w:292px;--header-h:64px
+    }
+    *{box-sizing:border-box}html,body{height:100%;margin:0}body{overflow:hidden;background:var(--surface2);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI","Microsoft JhengHei",sans-serif}
+    button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+    .app{display:flex;height:100dvh;min-height:100vh}.sidebar{position:relative;z-index:40;display:flex;flex:0 0 var(--sidebar-w);width:var(--sidebar-w);height:100%;flex-direction:column;background:linear-gradient(180deg,var(--sidebar),var(--sidebar2));color:#fff;box-shadow:8px 0 32px rgba(15,23,42,.09)}
+    .brand{display:flex;align-items:center;gap:12px;padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.1)}.brand-mark{display:grid;width:44px;height:44px;place-items:center;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,184,166,.18);color:#5eead4;font-weight:800}.brand h1{margin:0;font-size:17px}.brand p{margin:2px 0 0;color:#94a3b8;font-size:12px}
+    .nav{flex:1;min-height:0;overflow:auto;padding:16px 12px}.nav-title{padding:0 10px 8px;color:#64748b;font-size:11px;font-weight:700;letter-spacing:.12em}.tool-row{position:relative;margin:4px 0}.tool-btn{display:flex;width:100%;align-items:center;gap:12px;margin:0;padding:12px 42px 12px 12px;border:1px solid transparent;border-radius:14px;background:transparent;color:#cbd5e1;text-align:left;transition:.16s}.tool-btn:hover{background:rgba(255,255,255,.07);color:#fff}.tool-btn.active{border-color:rgba(94,234,212,.24);background:rgba(13,148,136,.22);color:#fff;box-shadow:inset 3px 0 #2dd4bf}.tool-icon{display:grid;width:38px;height:38px;flex:0 0 38px;place-items:center;border-radius:11px;background:rgba(255,255,255,.08);font-size:19px}.tool-copy{min-width:0}.tool-name{display:block;overflow:hidden;font-weight:700;text-overflow:ellipsis;white-space:nowrap}.tool-desc{display:block;overflow:hidden;color:#94a3b8;font-size:11px;text-overflow:ellipsis;white-space:nowrap}.remove-tool{position:absolute;top:50%;right:10px;z-index:2;width:30px;height:30px;transform:translateY(-50%);border:0;border-radius:8px;background:transparent;color:#94a3b8;font-size:18px;opacity:0}.tool-row:hover .remove-tool,.remove-tool:focus-visible{opacity:1}.remove-tool:hover{color:#fca5a5}
+    .sidebar-foot{padding:14px 12px calc(14px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.1)}.add-btn{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;padding:11px;border:1px dashed #475569;border-radius:13px;background:rgba(255,255,255,.02);color:#cbd5e1;font-weight:700}.add-btn:hover{border-color:#5eead4;background:rgba(20,184,166,.1);color:#fff}
+    .main{display:flex;min-width:0;flex:1;flex-direction:column}.topbar{position:relative;z-index:20;display:flex;height:var(--header-h);flex:0 0 var(--header-h);align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.92);backdrop-filter:blur(16px)}.menu-btn{display:none;width:40px;height:40px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#334155;font-size:20px}.page-title{min-width:0;font-weight:800}.page-subtitle{overflow:hidden;color:var(--muted);font-size:12px;text-overflow:ellipsis;white-space:nowrap}.top-actions{display:flex;align-items:center;gap:8px;margin-left:auto}.icon-btn,.open-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#334155;text-decoration:none}.icon-btn:hover,.open-btn:hover{border-color:#94a3b8;background:#f8fafc}
+    .workspace{position:relative;min-height:0;flex:1;overflow:hidden}.welcome{position:absolute;inset:0;overflow:auto;padding:clamp(22px,5vw,64px)}.hero{max-width:1080px;margin:0 auto}.eyebrow{color:var(--accent);font-weight:800}.hero h2{max-width:760px;margin:10px 0 12px;font-size:clamp(30px,5vw,56px);line-height:1.08;letter-spacing:-.04em}.hero>p{max-width:720px;margin:0;color:var(--muted);font-size:16px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}.welcome-card{min-width:0;padding:22px;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:0 8px 24px rgba(15,23,42,.05);text-align:left;transition:.18s}.welcome-card:hover{transform:translateY(-3px);border-color:#99f6e4;box-shadow:var(--shadow)}.welcome-card .tool-icon{margin-bottom:16px;background:#ecfeff}.welcome-card h3{margin:0;font-size:17px}.welcome-card p{min-height:44px;margin:7px 0 15px;color:var(--muted);font-size:13px}.launch{color:var(--accent);font-weight:800}
+    .frame-wrap{position:absolute;inset:0;background:#fff}.frame{display:block;width:100%;height:100%;border:0;background:#fff}.loader{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:#fff}.spinner{width:44px;height:44px;margin:0 auto 12px;border:4px solid #dbeafe;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}.loader-text{text-align:center;color:var(--muted)}@keyframes spin{to{transform:rotate(360deg)}}
+    .frame-notice{position:absolute;right:16px;bottom:16px;z-index:4;max-width:min(420px,calc(100% - 32px));padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.96);box-shadow:var(--shadow);font-size:12px}.frame-notice a{color:var(--accent);font-weight:800}.mask{position:fixed;inset:0;z-index:30;background:rgba(2,6,23,.58);backdrop-filter:blur(3px)}
+    .modal-layer{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(2,6,23,.62);backdrop-filter:blur(5px)}.modal{width:min(560px,100%);max-height:calc(100dvh - 32px);overflow:auto;border-radius:22px;background:#fff;box-shadow:0 30px 90px rgba(2,6,23,.35)}.modal-head{display:flex;align-items:center;padding:20px 22px 14px}.modal-head h2{margin:0;font-size:20px}.modal-close{margin-left:auto;width:38px;height:38px;border:0;border-radius:10px;background:#f1f5f9;color:#475569;font-size:21px}.form{padding:0 22px 22px}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:13px;font-weight:800}.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:11px;background:#fff;color:#0f172a;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#14b8a6;box-shadow:0 0 0 3px rgba(20,184,166,.14)}.field small{color:var(--muted)}.form-error{min-height:22px;color:var(--danger);font-size:13px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}.btn{padding:10px 16px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#334155;font-weight:800}.btn.primary{border-color:var(--accent);background:var(--accent);color:#fff}.btn:hover{filter:brightness(.98)}
+    .toast{position:fixed;right:18px;bottom:18px;z-index:100;max-width:min(400px,calc(100% - 36px));padding:12px 15px;border-radius:12px;background:#0f172a;color:#fff;box-shadow:var(--shadow);font-size:13px}
+    @media(max-width:900px){.cards{grid-template-columns:1fr}.welcome-card p{min-height:0}}
+    @media(max-width:767px){.sidebar{position:fixed;inset:0 auto 0 0;width:min(86vw,var(--sidebar-w));transform:translateX(-105%);transition:transform .22s ease;pointer-events:none}.sidebar.open{transform:translateX(0);pointer-events:auto}.menu-btn{display:inline-grid;place-items:center}.topbar{height:58px;flex-basis:58px;padding:0 12px}.page-subtitle{display:none}.open-btn span{display:none}.welcome{padding:24px 16px}.hero h2{font-size:34px}.cards{margin-top:26px}.frame-notice{right:10px;bottom:10px}.modal-layer{align-items:end;padding:0}.modal{width:100%;max-height:92dvh;border-radius:22px 22px 0 0}}
+    @media(prefers-color-scheme:dark){:root{--surface:#111827;--surface2:#020617;--text:#e5e7eb;--muted:#94a3b8;--line:#273449}.topbar,.loader,.frame{background:#0b1220}.topbar{background:rgba(11,18,32,.94)}.menu-btn,.icon-btn,.open-btn,.welcome-card{background:#111827;color:#e5e7eb}.modal{background:#111827}.field input,.field select,.field textarea{border-color:#334155;background:#0f172a;color:#e5e7eb}.btn{border-color:#334155;background:#1e293b;color:#e5e7eb}.frame-notice{background:rgba(15,23,42,.96)}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside id="sidebar" class="sidebar" aria-label="工具導覽">
+      <div class="brand"><div class="brand-mark">IW</div><div><h1>Stantec 工作輔助助理</h1><p>個人綜合工作看板</p></div></div>
+      <nav id="toolNav" class="nav" aria-label="工具清單"><div class="nav-title">TOOLS</div></nav>
+      <div class="sidebar-foot"><button id="addToolBtn" class="add-btn" type="button"><span aria-hidden="true">＋</span>新增工具</button></div>
+    </aside>
+    <div id="drawerMask" class="mask hidden" aria-hidden="true"></div>
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="menu-btn" type="button" aria-label="開啟導覽" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <div><div id="pageTitle" class="page-title">工作看板首頁</div><div id="pageSubtitle" class="page-subtitle">選擇工具開始工作</div></div>
+        <div class="top-actions">
+          <button id="homeBtn" class="icon-btn" type="button" title="回到首頁" aria-label="回到首頁">⌂</button>
+          <button id="reloadBtn" class="icon-btn hidden" type="button" title="重新載入工具" aria-label="重新載入工具">↻</button>
+          <a id="openExternalBtn" class="open-btn hidden" href="#" target="_blank" rel="noopener noreferrer"><span>新分頁開啟</span>↗</a>
+        </div>
+      </header>
+      <section id="workspace" class="workspace">
+        <div id="welcome" class="welcome"><div class="hero"><div class="eyebrow">WORKSPACE</div><h2>把常用工具集中在同一個工作介面。</h2><p>從左側或下方卡片開啟工具。新增的工具只保存在目前瀏覽器的 localStorage，不會上傳。</p><div id="welcomeCards" class="cards"></div></div></div>
+        <div id="frameWrap" class="frame-wrap hidden">
+          <div id="loader" class="loader"><div><div class="spinner"></div><div class="loader-text">正在載入工具…</div></div></div>
+          <iframe id="toolFrame" class="frame" title="工具工作區" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write; microphone; camera; fullscreen"></iframe>
+          <div id="frameNotice" class="frame-notice hidden">若工具未顯示，目標網站可能禁止 iframe 內嵌。請使用 <a id="noticeExternal" href="#" target="_blank" rel="noopener noreferrer">新分頁開啟</a>。</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="addModal" class="modal-layer hidden" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+    <div class="modal">
+      <div class="modal-head"><h2 id="addModalTitle">新增工具</h2><button id="modalCloseBtn" class="modal-close" type="button" aria-label="關閉">×</button></div>
+      <form id="toolForm" class="form" novalidate>
+        <div class="field"><label for="toolName">工具名稱 *</label><input id="toolName" name="name" maxlength="40" required placeholder="例如：專案追蹤工具" autocomplete="off"></div>
+        <div class="field"><label for="toolUrl">工具網址 *</label><input id="toolUrl" name="url" type="url" required placeholder="https://example.com/" inputmode="url" autocomplete="url"><small>僅接受 http 或 https 網址。</small></div>
+        <div class="field"><label for="toolDescription">功能簡述</label><textarea id="toolDescription" name="description" rows="3" maxlength="120" placeholder="簡短說明此工具的用途"></textarea></div>
+        <div class="field"><label for="toolIcon">圖示</label><select id="toolIcon" name="icon"><option value="🔧">🔧 工具</option><option value="📊">📊 報表</option><option value="📁">📁 文件</option><option value="🌐">🌐 網站</option><option value="🧭">🧭 導覽</option><option value="⚙️">⚙️ 設定</option></select></div>
+        <div id="formError" class="form-error" role="alert"></div>
+        <div class="modal-actions"><button id="cancelBtn" class="btn" type="button">取消</button><button class="btn primary" type="submit">新增並開啟</button></div>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script>
+  (() => {
+    'use strict';
+    const BUILTIN_TOOLS = [
+      {id:'postal',name:'郵遞區號工具',url:'https://ir-stan.github.io/3-3/',description:'台灣地址 3+3 碼郵遞區號查詢與批次檢核。',icon:'📮',builtin:true},
+      {id:'voice',name:'語音轉文字（逐字稿）',url:'https://ir-stan.github.io/voice-to-word/',description:'AI 語音轉文字逐字稿與會議記錄產出。',icon:'🎙️',builtin:true},
+      {id:'isco',name:'ISCO 灌注設計工具',url:'https://ir-stan.github.io/isco-tool/',description:'現地化學氧化灌注設計與計算工具。',icon:'🧪',builtin:true}
+    ];
+    const STORAGE_KEY = 'work-dashboard-custom-tools-v1';
+    const $ = id => document.getElementById(id);
+    const els = {sidebar:$('sidebar'),mask:$('drawerMask'),menu:$('menuBtn'),nav:$('toolNav'),add:$('addToolBtn'),welcome:$('welcome'),cards:$('welcomeCards'),frameWrap:$('frameWrap'),frame:$('toolFrame'),loader:$('loader'),notice:$('frameNotice'),noticeExternal:$('noticeExternal'),title:$('pageTitle'),subtitle:$('pageSubtitle'),home:$('homeBtn'),reload:$('reloadBtn'),external:$('openExternalBtn'),modal:$('addModal'),modalClose:$('modalCloseBtn'),cancel:$('cancelBtn'),form:$('toolForm'),formError:$('formError'),name:$('toolName'),url:$('toolUrl'),description:$('toolDescription'),icon:$('toolIcon'),toast:$('toast')};
+    let tools = [...BUILTIN_TOOLS, ...loadCustomTools()];
+    let activeId = null;
+    let loadTimer = null;
+    let toastTimer = null;
+    let lastFocused = null;
+
+    function loadCustomTools(){try{const raw=localStorage.getItem(STORAGE_KEY);const value=raw?JSON.parse(raw):[];return Array.isArray(value)?value.filter(t=>t&&typeof t.id==='string'&&typeof t.name==='string'&&isSafeUrl(t.url)).map(t=>({...t,builtin:false})):[]}catch(error){console.warn('無法讀取自訂工具',error);return []}}
+    function saveCustomTools(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(tools.filter(t=>!t.builtin)))}catch(error){showToast('無法儲存工具：瀏覽器可能禁止 localStorage。')}}
+    function isSafeUrl(value){try{const u=new URL(value);return u.protocol==='https:'||u.protocol==='http:'}catch{return false}}
+    function escapeHtml(value){return String(value).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
+    function showToast(message){clearTimeout(toastTimer);els.toast.textContent=message;els.toast.classList.remove('hidden');toastTimer=setTimeout(()=>els.toast.classList.add('hidden'),2800)}
+    function render(){
+      els.nav.querySelectorAll('.tool-btn').forEach(el=>el.remove());
+      els.cards.replaceChildren();
+      tools.forEach(tool=>{
+        const row=document.createElement('div');row.className='tool-row';
+        const button=document.createElement('button');button.type='button';button.className='tool-btn'+(tool.id===activeId?' active':'');button.dataset.id=tool.id;button.setAttribute('aria-pressed',String(tool.id===activeId));
+        button.innerHTML=`<span class="tool-icon" aria-hidden="true">${escapeHtml(tool.icon||'🔧')}</span><span class="tool-copy"><span class="tool-name">${escapeHtml(tool.name)}</span><span class="tool-desc">${escapeHtml(tool.description||tool.url)}</span></span>`;
+        button.addEventListener('click',()=>openTool(tool.id));row.append(button);
+        if(!tool.builtin){const remove=document.createElement('button');remove.type='button';remove.className='remove-tool';remove.dataset.removeId=tool.id;remove.setAttribute('aria-label',`移除 ${tool.name}`);remove.textContent='×';row.append(remove)}
+        els.nav.append(row);
+        const card=document.createElement('button');card.type='button';card.className='welcome-card';card.dataset.id=tool.id;card.innerHTML=`<span class="tool-icon" aria-hidden="true">${escapeHtml(tool.icon||'🔧')}</span><h3>${escapeHtml(tool.name)}</h3><p>${escapeHtml(tool.description||'')}</p><span class="launch">開啟工具 →</span>`;card.addEventListener('click',()=>openTool(tool.id));els.cards.append(card);
+      });
+    }
+    function openTool(id){
+      const tool=tools.find(item=>item.id===id);if(!tool)return;
+      activeId=id;render();closeDrawer();els.welcome.classList.add('hidden');els.frameWrap.classList.remove('hidden');els.loader.classList.remove('hidden');els.notice.classList.add('hidden');els.title.textContent=tool.name;els.subtitle.textContent=tool.description||tool.url;els.external.href=tool.url;els.noticeExternal.href=tool.url;els.external.classList.remove('hidden');els.reload.classList.remove('hidden');
+      clearTimeout(loadTimer);els.frame.onload=()=>{clearTimeout(loadTimer);els.loader.classList.add('hidden');};els.frame.src='about:blank';requestAnimationFrame(()=>{els.frame.src=tool.url});loadTimer=setTimeout(()=>{els.loader.classList.add('hidden');els.notice.classList.remove('hidden')},9000);
+      try{history.replaceState(null,'','#tool='+encodeURIComponent(id))}catch{}
+    }
+    function showHome(){activeId=null;clearTimeout(loadTimer);els.frame.onload=null;els.frame.src='about:blank';els.frameWrap.classList.add('hidden');els.welcome.classList.remove('hidden');els.loader.classList.add('hidden');els.notice.classList.add('hidden');els.title.textContent='工作看板首頁';els.subtitle.textContent='選擇工具開始工作';els.external.classList.add('hidden');els.reload.classList.add('hidden');render();closeDrawer();try{history.replaceState(null,'',location.pathname+location.search)}catch{}}
+    function reloadActive(){const tool=tools.find(item=>item.id===activeId);if(!tool)return;els.loader.classList.remove('hidden');els.notice.classList.add('hidden');els.frame.src='about:blank';requestAnimationFrame(()=>{els.frame.src=tool.url})}
+    function openDrawer(){els.sidebar.classList.add('open');els.mask.classList.remove('hidden');els.mask.setAttribute('aria-hidden','false');els.menu.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}
+    function closeDrawer(){els.sidebar.classList.remove('open');els.mask.classList.add('hidden');els.mask.setAttribute('aria-hidden','true');els.menu.setAttribute('aria-expanded','false');document.body.style.overflow=''}
+    function openModal(){lastFocused=document.activeElement;els.form.reset();els.formError.textContent='';els.modal.classList.remove('hidden');document.body.style.overflow='hidden';setTimeout(()=>els.name.focus(),0)}
+    function closeModal(){els.modal.classList.add('hidden');document.body.style.overflow='';if(lastFocused&&typeof lastFocused.focus==='function')lastFocused.focus()}
+    function addTool(event){event.preventDefault();const name=els.name.value.trim(),url=els.url.value.trim(),description=els.description.value.trim(),icon=els.icon.value;if(!name){els.formError.textContent='請輸入工具名稱。';els.name.focus();return}if(!isSafeUrl(url)){els.formError.textContent='請輸入有效的 http 或 https 網址。';els.url.focus();return}if(tools.some(t=>t.url.replace(/\/$/,'')===url.replace(/\/$/,''))){els.formError.textContent='此網址已在工具清單中。';els.url.focus();return}const tool={id:'custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),name,url:new URL(url).href,description,icon,builtin:false};tools.push(tool);saveCustomTools();closeModal();render();openTool(tool.id);showToast('已新增工具。')}
+    function removeTool(id){const tool=tools.find(t=>t.id===id&&!t.builtin);if(!tool)return;if(!confirm(`要移除「${tool.name}」嗎？`))return;tools=tools.filter(t=>t.id!==id);saveCustomTools();if(activeId===id)showHome();else render();showToast('已移除工具。')}
+
+    els.menu.addEventListener('click',()=>els.sidebar.classList.contains('open')?closeDrawer():openDrawer());els.mask.addEventListener('click',closeDrawer);els.home.addEventListener('click',showHome);els.reload.addEventListener('click',reloadActive);els.add.addEventListener('click',openModal);els.modalClose.addEventListener('click',closeModal);els.cancel.addEventListener('click',closeModal);els.form.addEventListener('submit',addTool);
+    els.modal.addEventListener('click',event=>{if(event.target===els.modal)closeModal()});els.nav.addEventListener('click',event=>{const remove=event.target.closest('[data-remove-id]');if(remove){event.stopPropagation();removeTool(remove.dataset.removeId)}});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'){if(!els.modal.classList.contains('hidden'))closeModal();else closeDrawer()}if(event.key==='Tab'&&!els.modal.classList.contains('hidden')){const focusable=[...els.modal.querySelectorAll('button,input,select,textarea')].filter(el=>!el.disabled);const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}});
+    window.addEventListener('resize',()=>{if(innerWidth>=768)closeDrawer()});
+    render();const hashId=new URLSearchParams(location.hash.slice(1)).get('tool');if(hashId&&tools.some(t=>t.id===hashId))openTool(hashId);else showHome();
+  })();
+  </script>
+</body>
+</html>
